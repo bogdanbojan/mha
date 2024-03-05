@@ -19,11 +19,10 @@ type envVars struct {
 	PriceAPI string `env:"PRICE_API" envDefault:"https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD"`
 
 	SecondsPoll int `env:"SECONDS_POLL" envDefault:"10"`
-	MinutesPoll int `env:"MINUTES_POLL" envDefault:"30"`
+	MinutesPoll int `env:"MINUTES_POLL" envDefault:"10"`
 }
 
 // service represents the main application.
-// TODO: Think about using more channels.
 // TODO: Maybe create a factory function for this.
 type service struct {
 	prices  []float64
@@ -31,8 +30,6 @@ type service struct {
 
 	log *log.Logger
 	envVars
-	// TODO: Keep a time window for the average.
-	Window time.Time
 }
 
 type price struct {
@@ -69,10 +66,9 @@ func (s *service) Avg() error {
 	return nil
 }
 
-// CheckAverage polls the bitcoin price every 10 seconds.
+// CheckAverage polls the bitcoin price every x minutes(10 min default).
 func (s *service) CheckAverage() error {
-	// TODO: Change this after to time.Minutes!!
-	ticker := time.NewTicker(time.Duration(s.MinutesPoll) * time.Second)
+	ticker := time.NewTicker(time.Duration(s.MinutesPoll) * time.Minute)
 	s.log.Println("CheckAverage started at", time.Now())
 	defer ticker.Stop()
 	for ; true; <-ticker.C {
@@ -83,7 +79,7 @@ func (s *service) CheckAverage() error {
 
 }
 
-// CheckPrice polls the bitcoin price every 10 seconds.
+// CheckPrice polls the bitcoin price every x seconds(10 sec default).
 func (s *service) CheckPrice() error {
 	ticker := time.NewTicker(time.Duration(s.SecondsPoll) * time.Second)
 	s.log.Println("CheckPrice started at", time.Now())
@@ -109,9 +105,15 @@ func (s *service) CheckPrice() error {
 			s.log.Println(err)
 			return err
 		}
-		// TODO: Cap the array.
-		s.prices = append(s.prices, price.USD)
-		s.log.Println("Appended", price.USD)
+		if len(s.prices) == cap(s.prices) {
+			// Maintain the cap with a FIFO.
+			s.prices = s.prices[1:]
+			s.prices = append(s.prices, price.USD)
+			s.log.Printf("Appended == %v, \n The price: %v", len(s.prices), price.USD)
+		} else {
+			s.prices = append(s.prices, price.USD)
+			s.log.Printf("Appended < %v, \n The price: %v", len(s.prices), price.USD)
+		}
 	}
 	return nil
 
@@ -125,12 +127,15 @@ func main() {
 
 	log := log.New(os.Stderr, "[coin-check] ", log.LstdFlags)
 
+	perMin := 60 / envVars.SecondsPoll
+	arrCap := envVars.MinutesPoll * perMin
+
 	s := service{
+		prices:  make([]float64, 0, arrCap),
 		envVars: envVars,
 		log:     log,
 	}
 
-	// TODO: Think about machine limitations.
 	go s.CheckPrice()
 	go s.CheckAverage()
 
