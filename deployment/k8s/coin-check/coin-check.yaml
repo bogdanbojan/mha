@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coin-check
+spec:
+  selector:
+    matchLabels:
+      app: coin-check
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: coin-check
+    spec:
+      containers:
+      - name: coin-check
+        image: coin-check:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+
