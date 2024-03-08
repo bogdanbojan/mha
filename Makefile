@@ -32,19 +32,22 @@ docker-down:
 ###############################################################################
 # Local k8s setup
 
+kind-local-up: kind-cluster-up kind-coin-check kind-ok
+
 kind-cluster-up:
-	kind create cluster --config=./deployment/k8s/kind-config.yaml
+	kind create cluster --name mha --config=./deployment/k8s/kind-config.yaml
 
 kind-cluster-down:
-	kind delete cluster
+	kind delete cluster --name mha
 
-# TODO: Make only one setup for the service so as to not have duplicate code.
 kind-coin-check:
+	docker-coin-check-build
 	kind load docker-image coin-check:latest
 	kubectl apply -f ./deployment/k8s/coin-check/coin-check.yaml
 	kubectl apply -f ./deployment/k8s/coin-check/service.yaml
 
 kind-ok:
+	docker-ok-build
 	kind load docker-image ok:latest
 	kubectl apply -f ./deployment/k8s/ok/ok.yaml
 	kubectl apply -f ./deployment/k8s/ok/service.yaml
@@ -54,4 +57,7 @@ kind-down:
 	kubectl delete svc coin-check
 	kubectl delete deployment ok
 	kubectl delete svc ok
+
+kind-cred-info:
+	kubectl config view --minify --flatten --context=kind-mha
 
