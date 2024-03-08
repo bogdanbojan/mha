@@ -43,6 +43,19 @@ kind-coin-check: docker-coin-check-build
 	kubectl apply -f ./deployment/k8s/coin-check/coin-check.yaml
 	kubectl apply -f ./deployment/k8s/coin-check/service.yaml
 
+kind-local-ingress:
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+	kubectl wait --namespace ingress-nginx \
+	  --for=condition=ready pod \
+	  --selector=app.kubernetes.io/component=controller \
+	  --timeout=90s
+
+# If you choose to add a host to the address. For it to work locally, we need to
+# add <ip_address> <ingress_host> to /etc/hosts.
+kind-local-ingress-host:
+	docker container inspect mha-control-plane \
+	--format '{{ .NetworkSettings.Networks.kind.IPAddress }}'
+
 kind-ok: docker-ok-build
 	kind load docker-image ok:latest
 	kubectl apply -f ./deployment/k8s/ok/ok.yaml
