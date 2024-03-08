@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-coin-check
+spec:
+  rules:
+    - host: hello.coin-check.com 
+      http:
+        paths:
+        - pathType: Prefix
+          path: /current
+          backend:
+            service:
+              name: coin-check
+              port:
+                number: 8080
+        - pathType: Prefix
+          path: /average
+          backend:
+            service:
+              name: coin-check
+              port:
+                number: 8080
+  ingressClassName: nginx
