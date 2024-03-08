@@ -15,7 +15,9 @@ spec:
       containers:
       - name: coin-check
         image: coin-check:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+        - name: reg-aws
 
