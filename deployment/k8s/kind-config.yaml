@@ -12,4 +12,6 @@ nodes:
     listenAddress: "0.0.0.0"
     protocol: tcp
 - role: worker
-
+networking:
+  apiServerAddress: "127.0.0.1"
+  apiServerPort: 36741
