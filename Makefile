@@ -61,3 +61,14 @@ kind-down:
 kind-cred-info:
 	kubectl config view --minify --flatten --context=kind-mha
 
+###############################################################################
+# Local terraform setup
+
+tf-k8s-to-hcl:
+	cat ./deployment/k8s/coin-check/service.yaml | tfk8s >> ./deployment/terraform/coin-check/kubernetes.tf
+
+tf-cluster-creds:
+	cd ./deployment/terraform/mha-cluster/ && \
+	aws eks --region $(terraform output -raw region) update-kubeconfig \
+    --name $(terraform output -raw cluster_name)
+
