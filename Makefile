@@ -64,6 +64,7 @@ kind-ok: docker-ok-build
 kind-down:
 	kubectl delete deployment coin-check
 	kubectl delete svc coin-check
+	kubectl delete secret reg-aws
 	kubectl delete deployment ok
 	kubectl delete svc ok
 
