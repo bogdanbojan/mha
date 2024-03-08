@@ -72,3 +72,15 @@ tf-cluster-creds:
 	aws eks --region $(terraform output -raw region) update-kubeconfig \
     --name $(terraform output -raw cluster_name)
 
+###############################################################################
+# Local aws setup
+
+# TODO: Save the AWS registry as a variable.
+
+aws-log-in:
+	aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 198760508209.dkr.ecr.eu-west-3.amazonaws.com
+
+aws-imagePull:
+	ECR_PASS=$(shell sh -c "aws ecr get-login-password --region eu-west-3") && \
+	kubectl create secret docker-registry reg-aws --docker-server=198760508209.dkr.ecr.eu-west-3.amazonaws.com --docker-username=AWS --docker-password="$$ECR_PASS" --docker-email=bogdanbojan03@gmail.com
+
