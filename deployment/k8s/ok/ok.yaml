@@ -14,8 +14,9 @@ spec:
     spec:
       containers:
       - name: ok
-        image: ok:latest
-        imagePullPolicy: IfNotPresent
+        image: 198760508209.dkr.ecr.eu-west-3.amazonaws.com/ok:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8081
-
+      imagePullSecrets:
+        - name: reg-aws
