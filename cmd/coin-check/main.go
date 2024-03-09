@@ -18,7 +18,7 @@ type envVars struct {
 
 	PriceAPI string `env:"PRICE_API" envDefault:"https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD"`
 
-	SecondsPoll int `env:"SECONDS_POLL" envDefault:"60"`
+	SecondsPoll int `env:"SECONDS_POLL" envDefault:"10"`
 	MinutesPoll int `env:"MINUTES_POLL" envDefault:"10"`
 }
 
