@@ -49,8 +49,6 @@ kind-local-ingress:
 	  --selector=app.kubernetes.io/component=controller \
 	  --timeout=90s
 
-# If you choose to add a host to the address. For it to work locally, we need to
-# add <ip_address> <ingress_host> to /etc/hosts.
 kind-local-ingress-host:
 	docker container inspect mha-control-plane \
 	--format '{{ .NetworkSettings.Networks.kind.IPAddress }}'
@@ -79,8 +77,6 @@ tf-cluster-creds:
 
 ###############################################################################
 # Local aws setup
-
-# TODO: Save the AWS registry as a variable.
 
 aws-log-in:
 	aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 198760508209.dkr.ecr.eu-west-3.amazonaws.com
