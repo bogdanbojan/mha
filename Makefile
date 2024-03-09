@@ -40,8 +40,7 @@ kind-cluster-down:
 
 kind-coin-check: docker-coin-check-build
 	kind load docker-image coin-check:latest
-	kubectl apply -f ./deployment/k8s/coin-check/coin-check.yaml
-	kubectl apply -f ./deployment/k8s/coin-check/service.yaml
+	kubectl apply -f ./deployment/k8s/coin-check/.
 
 kind-local-ingress:
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
@@ -58,15 +57,11 @@ kind-local-ingress-host:
 
 kind-ok: docker-ok-build
 	kind load docker-image ok:latest
-	kubectl apply -f ./deployment/k8s/ok/ok.yaml
-	kubectl apply -f ./deployment/k8s/ok/service.yaml
+	kubectl apply -f ./deployment/k8s/ok/.
 
 kind-down:
-	kubectl delete deployment coin-check
-	kubectl delete svc coin-check
-	kubectl delete secret reg-aws
-	kubectl delete deployment ok
-	kubectl delete svc ok
+	kubectl delete -f ./deployment/k8s/coin-check/.
+	kubectl delete -f ./deployment/k8s/ok/.
 
 kind-cred-info:
 	kubectl config view --minify --flatten --context=kind-mha
@@ -86,6 +81,7 @@ tf-cluster-creds:
 # Local aws setup
 
 # TODO: Save the AWS registry as a variable.
+# aws eks update-kubeconfig --region eu-west-3 --name <cluster_name>
 
 aws-log-in:
 	aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 198760508209.dkr.ecr.eu-west-3.amazonaws.com
