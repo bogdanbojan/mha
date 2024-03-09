@@ -35,6 +35,19 @@ resource "kubernetes_ingress_v1" "ingress" {
 
           path = "/average"
         }
+        
+        path {
+          backend {
+            service {
+              name = "ok"
+              port {
+                number = 8081
+              }
+            }
+          }
+
+          path = "/ok"
+        }
       }
     }
 

@@ -21,3 +21,27 @@ resource "kubernetes_manifest" "service_coin_check" {
     }
   }
 }
+
+resource "kubernetes_manifest" "service_ok" {
+  manifest = {
+    "apiVersion" = "v1"
+    "kind" = "Service"
+    "metadata" = {
+      "name" = "ok"
+      "namespace" = "default"
+    }
+    "spec" = {
+      "ports" = [
+        {
+          "port" = 8081
+          "protocol" = "TCP"
+          "targetPort" = 8081
+        },
+      ]
+      "selector" = {
+        "app" = "ok"
+      }
+      "type" = "LoadBalancer"
+    }
+  }
+}
