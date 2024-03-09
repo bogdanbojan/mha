@@ -6,7 +6,6 @@ terraform {
   }
 }
 
-
 variable "host" {
   type = string
 }

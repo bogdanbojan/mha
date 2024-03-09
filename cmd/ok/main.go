@@ -9,7 +9,7 @@ import (
 )
 
 type envVars struct {
-	Port string `env:"PORT" envDefault:"8080"`
+	Port string `env:"PORT" envDefault:"8081"`
 }
 
 type service struct {
