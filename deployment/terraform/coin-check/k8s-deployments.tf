@@ -1,3 +1,9 @@
+# TODO: Add both deployments in the same file?
+# TODO: Fetch secrets from SecretsManager, not from tfvars.
+# TODO: Fix the service type.
+# TODO: Fix lots of hardcoding in the tf files.
+# TODO: Maybe split them into namespaces.
+
 resource "kubernetes_manifest" "deployment_coin_check" {
   manifest = {
     "apiVersion" = "apps/v1"
