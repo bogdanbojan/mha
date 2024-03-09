@@ -10,3 +10,4 @@ USD every 10 seconds and the average value over the last 10 minutes.
 The `ok` service is a RESTful API that responds to GET requests on `/yes` with 
 a 200 status code.
 
+test
