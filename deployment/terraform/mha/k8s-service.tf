@@ -9,7 +9,6 @@ resource "kubernetes_manifest" "service_coin_check" {
     "spec" = {
       "ports" = [
         {
-          "nodePort" = 30000
           "port" = 8080
           "protocol" = "TCP"
           "targetPort" = 8080
@@ -18,7 +17,7 @@ resource "kubernetes_manifest" "service_coin_check" {
       "selector" = {
         "app" = "coin-check"
       }
-      "type" = "NodePort"
+      "type" = "LoadBalancer"
     }
   }
 }
