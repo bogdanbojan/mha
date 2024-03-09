@@ -30,7 +30,7 @@ docker-down:
 ###############################################################################
 # Local k8s setup
 
-kind-local-up: kind-cluster-up kind-coin-check kind-ok kind-local-ingress
+kind-local-up: kind-cluster-up kind-local-ingress kind-coin-check kind-ok
 
 kind-cluster-up:
 	kind create cluster --name mha --config=./deployment/k8s/kind-config.yaml
