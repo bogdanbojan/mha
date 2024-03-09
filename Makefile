@@ -39,7 +39,7 @@ kind-cluster-down:
 	kind delete cluster --name mha
 
 kind-coin-check: docker-coin-check-build
-	kind load docker-image coin-check:latest
+	kind load docker-image coin-check:latest --name "mha"
 	kubectl apply -f ./deployment/k8s/coin-check/.
 
 kind-local-ingress:
@@ -54,7 +54,7 @@ kind-local-ingress-host:
 	--format '{{ .NetworkSettings.Networks.kind.IPAddress }}'
 
 kind-ok: docker-ok-build
-	kind load docker-image ok:latest
+	kind load docker-image ok:latest --name "mha"
 	kubectl apply -f ./deployment/k8s/ok/.
 
 kind-down:
