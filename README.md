@@ -42,17 +42,17 @@ The ok service exposes one endpoint:
 
 ### Prerequistes
 
-- [Kubernetes]("https://kubernetes.io/docs/setup/")
-- [Docker]("https://docs.docker.com/engine/install/ubuntu/")
-- [Golang]("https://go.dev/doc/install")
-- [AWS CLI]("https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html")
-- [Terraform]("https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli") 
+- [Kubernetes](https://kubernetes.io/docs/setup/)
+- [Docker](https://docs.docker.com/engine/install/ubuntu/)
+- [Golang](https://go.dev/doc/install)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) 
 
 ---
 
 #### Steps to bring up the environment
 
-There is no additional setup needed besides the [AWS CLI configuration]("https://docs.aws.amazon.com/cli/latest/userguide/cli-authentication-user.html") with the 
+There is no additional setup needed besides the [AWS CLI configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-authentication-user.html) with the 
 correct access/secret keys and installing the prerequisites.
 
 1) Initiate the cluster by `cd ./deployment/terraform/mha-cluster` and run
@@ -76,8 +76,8 @@ necessary informations about the state of the cluster when we deploy the k8s obj
 This is done with a DynamoDB entry which holds the state lock and an S3 entry with 
 the actual file.
 
-We are provisioning the cluster with 2 add-ons. [VPC-CNI]("https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html")
-for enabling `NetworkPolicy` rules inside our cluster. [EBS-CSI]("https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html")
+We are provisioning the cluster with 2 add-ons. [VPC-CNI](https://docs.aws.amazon.com/eks/latest/userguide/managing-vpc-cni.html)
+for enabling `NetworkPolicy` rules inside our cluster. [EBS-CSI](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html)
 for enabling volumes support.
 
 RBAC is enabled in the cluster.
@@ -112,13 +112,13 @@ Terraform Cloud.
 ### Prerequisites
 
 - [Kubernetes](https://kubernetes.io/docs/setup/)
-- [Docker]("https://docs.docker.com/engine/install/ubuntu/")
-- [Golang]("https://go.dev/doc/install")
-- [Kind]("https://kind.sigs.k8s.io/docs/user/quick-start/")
-- [AWS CLI]("https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html") (optional) - if you want to pull the images from the private ECR repo
-- [Terraform]("https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli") (optional) - if you want to apply part of the production setting 
+- [Docker](https://docs.docker.com/engine/install/ubuntu/)
+- [Golang](https://go.dev/doc/install)
+- [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (optional) - if you want to pull the images from the private ECR repo
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) (optional) - if you want to apply part of the production setting 
 to the local kind cluster
-- [tfk8s]("https://github.com/jrhouston/tfk8s") (optional) - if you want to generate HCL files from the yaml charts
+- [tfk8s](https://github.com/jrhouston/tfk8s) (optional) - if you want to generate HCL files from the yaml charts
 
 #### Development with docker
 The docker configuration is found in `./deployment/docker/<service_name>`.
