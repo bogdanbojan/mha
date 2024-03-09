@@ -89,6 +89,9 @@ aws-imagePull:
 	ECR_PASS=$(shell sh -c "aws ecr get-login-password --region eu-west-3") && \
 	kubectl create secret docker-registry reg-aws --docker-server=198760508209.dkr.ecr.eu-west-3.amazonaws.com --docker-username=AWS --docker-password="$$ECR_PASS" --docker-email=bogdanbojan03@gmail.com
 
+aws-ecr-push-images: docker-ok-build docker-coin-check-build aws-log-in
+	docker push 198760508209.dkr.ecr.eu-west-3.amazonaws.com/ok:latest
+	docker push 198760508209.dkr.ecr.eu-west-3.amazonaws.com/coin-check:latest
 
 ###############################################################################
 # Helpers
