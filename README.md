@@ -111,7 +111,7 @@ Terraform Cloud.
 
 ### Prerequisites
 
-- [Kubernetes]("https://kubernetes.io/docs/setup/")
+- [Kubernetes](https://kubernetes.io/docs/setup/)
 - [Docker]("https://docs.docker.com/engine/install/ubuntu/")
 - [Golang]("https://go.dev/doc/install")
 - [Kind]("https://kind.sigs.k8s.io/docs/user/quick-start/")
@@ -173,6 +173,8 @@ You can see the variables by running `make kind-cred-info`.
 4) If you pull the images from ECR in the Terraform configuration, you will need to add to the same 
 to add the `registry_server`, `registry_username`, `registry_password` and 
 `registry_email` to the `secrets.tfvars` file.
+
+*NetworkPolicy support for Kind is not in scope: https://github.com/kubernetes-sigs/kind/issues/842
 
 ---
 
