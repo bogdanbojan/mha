@@ -30,7 +30,7 @@ docker-down:
 ###############################################################################
 # Local k8s setup
 
-kind-local-up: kind-cluster-up kind-coin-check kind-ok
+kind-local-up: kind-cluster-up kind-coin-check kind-ok kind-local-ingress
 
 kind-cluster-up:
 	kind create cluster --name mha --config=./deployment/k8s/kind-config.yaml
@@ -81,7 +81,6 @@ tf-cluster-creds:
 # Local aws setup
 
 # TODO: Save the AWS registry as a variable.
-# aws eks update-kubeconfig --region eu-west-3 --name <cluster_name>
 
 aws-log-in:
 	aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 198760508209.dkr.ecr.eu-west-3.amazonaws.com
@@ -90,3 +89,11 @@ aws-imagePull:
 	ECR_PASS=$(shell sh -c "aws ecr get-login-password --region eu-west-3") && \
 	kubectl create secret docker-registry reg-aws --docker-server=198760508209.dkr.ecr.eu-west-3.amazonaws.com --docker-username=AWS --docker-password="$$ECR_PASS" --docker-email=bogdanbojan03@gmail.com
 
+
+###############################################################################
+# Helpers
+# aws eks update-kubeconfig --region eu-west-3 --name <cluster_name>
+# kubectl config get-contexts
+# kubectl config use-context kind-mha
+# kubectl run busybox1 --image=busybox --labels app=busybox1 -- sleep 3600
+# kubectl exec -ti busybox1 -- ping -c3 <coin_check_ip>
