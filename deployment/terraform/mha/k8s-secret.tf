@@ -10,11 +10,12 @@ resource "kubernetes_secret" "reg-aws" {
       auths = {
         "${var.registry_server}" = {
           "username" = var.registry_username
-          "password" = var.registry_password
+          "password" = data.aws_secretsmanager_secret_version.registry_password.secret_string
           "email"    = var.registry_email
-          "auth"     = base64encode("${var.registry_username}:${var.registry_password}")
+          "auth"     = base64encode("${var.registry_username}:${data.aws_secretsmanager_secret_version.registry_password.secret_string}")
         }
       }
     })
   }
 }
+
