@@ -2,7 +2,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.15.3"
 
-# Latest stable version.
+  # Latest stable version.
   cluster_name    = local.cluster_name
   cluster_version = "1.29"
 
@@ -57,7 +57,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.0.0"
 
-  name = "education-vpc"
+  name = "mha-vpc"
 
   cidr = "10.0.0.0/16"
   azs  = slice(data.aws_availability_zones.available.names, 0, 3)
