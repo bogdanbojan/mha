@@ -95,11 +95,18 @@ information for the deployment.
 
 #### `github-workflow`
 
-Automated deployment process.
+Fully automated deployment process.
 
 On PR, we are applying the `terraform plan` and showcasing it in the comments.
 
-On merge, we are running the `terraform apply` automatically.
+On merge, and we are pushing the docker containers to our private 
+registry in AWS ECR and running the `terraform apply` automatically. Therefore,
+the deployment will pe pushed to AWS on merge.
+
+The `terraform apply` is run sequentially on merge. First, it checks if the workflow that
+deployed the services to ECR is completed *and* successful. If it is, it deploys
+the cluster. After the cluster is deployed, the k8s deployment will be triggered
+and deployed as well.
 
 We have a Terraform Cloud workplace set with the AWS Access/Secret Keys. We 
 provisioned the repo with the necessary secrets in order to interact with 
@@ -176,6 +183,10 @@ the `registry_server`, `registry_username`, `registry_password` and
 
 *TODOs*
 
+- Fix gh workflow that deals with terraform apply. The gh workflow for terraform
+plan and pushing to ECR works. The gh workflow succeeds when applying the cluster
+configuration but fails on the k8s one because it cannot read the region from the 
+tf state. Locally there is *no issue* in building/deploying everything.
 - Less hardcoded variables in the terraform configurations.
 - Less hardcoded variables in the k8s configuration. Maybe opt for helm charts.
 - Clearer k8s deployment with proper namespaces.
