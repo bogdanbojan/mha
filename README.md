@@ -142,12 +142,8 @@ The cluster is configured to support an nginx ingress, hostname resolution.
 RBAC is enabled by default in Kind. The cluster configuration is found at 
 `./deployment/k8s/kind-cluster.yaml`.
 
-1) Install the necessary prerequisites. 
-The cluster can be brought up with `make kind-cluster-up`. 
-
-2) Run `make kind-local-up`, which will create a local custom k8s cluster, build 
+1) Run `make kind-local-up`, which will create a local custom k8s cluster, build 
 the docker service containers, load them into kind and create an nginx-ingress-controller.
-
 
 The `coin-check` service will have the port exposed on `localhost:30000` and the 
 `ok` service will have the port exposed on `localhost:30001`. If you set up the 
