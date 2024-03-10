@@ -166,8 +166,8 @@ and add the IP to your `/etc/hosts`.
 You provide the `.tfvars` file to the tf commands with the flag `-var-file=<file>.tfvars`.
 You can see the variables by running `make kind-cred-info`. 
 
-4) If you pull the images from ECR in the Terraform configuration, you will need to add to the same 
-to add the `registry_server`, `registry_username`, `registry_password` and 
+4) If you pull the images from ECR in the Terraform configuration, you will need to add
+the `registry_server`, `registry_username`, `registry_password` and 
 `registry_email` to the `secrets.tfvars` file.
 
 *NetworkPolicy support for Kind is not in scope: https://github.com/kubernetes-sigs/kind/issues/842
