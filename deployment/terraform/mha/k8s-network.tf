@@ -9,7 +9,7 @@ resource "kubernetes_manifest" "networkpolicy_access_nginx" {
     "spec" = {
       "egress" = [
         {
-          "from" = [
+          "to" = [
             {
               "podSelector" = {
                 "matchLabels" = {

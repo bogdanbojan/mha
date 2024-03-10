@@ -10,7 +10,7 @@ spec:
         matchLabels: 
           app.kubernetes.io/instance: nginx-ingress-controller
   egress:
-  - from:
+  - to:
     - podSelector:
         matchLabels: 
           app.kubernetes.io/instance: nginx-ingress-controller
