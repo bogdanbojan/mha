@@ -40,7 +40,7 @@ type price struct {
 // price in the last MINUTES_POLL.
 func (s *service) averagePrice(w http.ResponseWriter, r *http.Request) {
 	bitcoinPriceAverage := strconv.FormatFloat(s.average, 'f', -1, 64)
-	fmt.Fprintf(w, "average bitcoin price: %v \n", bitcoinPriceAverage)
+	fmt.Fprintf(w, "Average bitcoin price: %v \n", bitcoinPriceAverage)
 }
 
 // currentPrice is a Handler function which responds with the current bitcoin
@@ -143,7 +143,7 @@ func main() {
 	http.HandleFunc("/average", s.averagePrice)
 	http.HandleFunc("/current", s.currentPrice)
 
-	s.log.Println("Started on port", s.Port)
+    s.log.Println("Started on port: ", s.Port)
 
 	err := http.ListenAndServe(":"+s.Port, nil)
 	if err != nil {
