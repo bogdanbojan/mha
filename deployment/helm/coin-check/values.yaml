@@ -1,0 +1,51 @@
+# The number of desired pods, mapped to `replicas` in the deployment.
+replicaCount: 1
+
+image:
+  name: coin-check
+  tag: latest
+
+imagePullSecrets:
+  name: reg-aws
+
+service:
+  port: 8080
+  targetPort: 8080
+  protocol: TCP
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: hello.coin-check.com
+      paths:
+        - path: /current
+          pathType: Prefix
+        - path: /average
+          pathType: Prefix
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+    cpu:
+      average: 65
+    memory:
+      average: 65
+
+network:
+  matchLabels:
+    name: nginx-ingress-controller
+
+# Environment variables can be set in this dictionary,
+# where keys are the variable names. For a list of the
+# environment variables that have default values, see
+# the readme.
+env: {}
+
+default:
+  env:
+    SECONDS_POLL: 10   
+    MINUTES_POLL: 10 
+

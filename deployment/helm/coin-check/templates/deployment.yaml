@@ -1,0 +1,33 @@
+---
+# https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/deployment-v1/
+{{- $shortName := include "helm.fullname" . | trunc 47 }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm.fullname" . }}
+  labels:
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: {{ .Values.service.port }}
+          env:
+{{- range $key, $val := merge .Values.env .Values.default.env }}
+            - name: {{ $key }}
+              value: {{ $val | quote }} # Must be string
+{{- end }}
+
