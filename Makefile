@@ -65,6 +65,15 @@ kind-cred-info:
 	kubectl config view --minify --flatten --context=kind-mha
 
 ###############################################################################
+# Local helm setup
+
+helm-coin-check-up:
+	helm install ./deployment/helm/coin-check --name-template coin-check
+
+helm-coin-check-down:
+	helm uninstall coin-check
+
+###############################################################################
 # Local terraform setup
 
 tf-k8s-to-hcl:
