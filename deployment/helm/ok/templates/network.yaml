@@ -1,0 +1,22 @@
+---
+# https://kubernetes.io/docs/reference/kubernetes-api/policy-resources/network-policy-v1/
+{{- $shortName := include "helm.fullname" . | trunc 47 }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "helm.fullname" . }}
+spec:
+  rules:
+    podSelector: {}
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels: 
+            app.kubernetes.io/name: {{ .Values.network.matchLabels.name }}
+    egress:
+    - to:
+      - podSelector:
+          matchLabels: 
+            app.kubernetes.io/name: {{ .Values.network.matchLabels.name }}
+
+

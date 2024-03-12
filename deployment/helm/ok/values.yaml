@@ -1,0 +1,46 @@
+# The number of desired pods, mapped to `replicas` in the deployment.
+replicaCount: 1
+
+image:
+  name: ok
+  tag: latest
+
+imagePullSecrets:
+  name: reg-aws
+
+service:
+  port: 8081
+  targetPort: 8081
+  protocol: TCP
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: hello.ok.com
+      paths:
+        - path: /current
+          pathType: Prefix
+        - path: /average
+          pathType: Prefix
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+    cpu:
+      average: 65
+    memory:
+      average: 65
+
+network:
+  matchLabels:
+    name: nginx-ingress-controller
+
+# Environment variables can be set in this dictionary,
+# where keys are the variable names. For a list of the
+# environment variables that have default values, see
+# the readme.
+env: {}
+
